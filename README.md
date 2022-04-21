@@ -40,3 +40,7 @@ $ npm run test:cov
 # run seeding
 $ npm run seed:run
 ```
+
+## DBDiagram
+
+https://dbdiagram.io/d/624ea0edd043196e39111edb
