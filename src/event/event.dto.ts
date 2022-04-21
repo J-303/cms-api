@@ -12,3 +12,8 @@ export class UpdateEventDTO {
     @IsNotEmpty()
     name: string;
 }
+
+export class EventDTOResponse {
+    @ApiProperty()
+    name: string;
+}

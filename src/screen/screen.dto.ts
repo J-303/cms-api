@@ -17,3 +17,8 @@ export class UpdateScreenDTO {
     @IsNotEmpty()
     name: string;
 }
+
+export class ScreenDTOResponse {
+    @ApiProperty()
+    name: string;
+}

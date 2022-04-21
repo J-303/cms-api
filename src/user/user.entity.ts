@@ -1,7 +1,7 @@
-import { EventEntity } from "src/event/event.entity";
+import { EventEntity } from "../event/event.entity";
 import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { hash } from 'bcrypt'
-import { ContentEntity } from "src/content/content.entity";
+import { ContentEntity } from "../content/content.entity";
 
 @Entity('user')
 export class UserEntity {

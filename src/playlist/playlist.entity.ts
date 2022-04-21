@@ -1,6 +1,6 @@
-import { ContentPlaylistEntity } from "src/content-playlist/content-playlist.entity";
-import { UserEntity } from "src/user/user.entity";
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { ContentPlaylistEntity } from "../content-playlist/content-playlist.entity";
+import { UserEntity } from "../user/user.entity";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('playlist')
 export class PlaylistEntity {
@@ -10,7 +10,8 @@ export class PlaylistEntity {
     @Column()
     name: string;
 
-    @ManyToOne(type => UserEntity)
+    @ManyToOne(type => UserEntity)   
+    @JoinColumn({name: 'ownerId'})
     owner: UserEntity;
 
     @OneToMany(type => ContentPlaylistEntity, entity => entity.playlist)

@@ -1,8 +1,8 @@
 import { Controller, UseGuards } from "@nestjs/common";
-import { ApiAcceptedResponse, ApiUnauthorizedResponse, ApiBearerAuth, ApiNotFoundResponse, ApiTags } from "@nestjs/swagger";
+import { AuthGuard } from "@nestjs/passport";
+import { ApiAcceptedResponse, ApiUnauthorizedResponse, ApiBearerAuth, ApiNotFoundResponse, ApiTags, ApiOkResponse } from "@nestjs/swagger";
 import { Crud, CrudController } from "@nestjsx/crud";
-import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
-import { CreateScreenDTO, UpdateScreenDTO } from "./screen.dto";
+import { CreateScreenDTO, ScreenDTOResponse, UpdateScreenDTO } from "./screen.dto";
 import { ScreenEntity } from "./screen.entity";
 import { ScreenGuard } from "./screen.guard";
 import { ScreenService } from "./screen.service";
@@ -15,18 +15,21 @@ import { ScreenService } from "./screen.service";
         only: ['createOneBase', 'getOneBase', 'getManyBase', 'updateOneBase', 'deleteOneBase'],
         getOneBase: {
             decorators: [
+                ApiOkResponse({type: ScreenDTOResponse}),
                 ApiAcceptedResponse({ description: 'Returns screen' }),
                 ApiNotFoundResponse({ description: 'Screen not found' }),
             ],
         },
         getManyBase: {
             decorators: [
+                ApiOkResponse({type: ScreenDTOResponse}),
                 ApiAcceptedResponse({ description: 'Returns all screens' })
             ],
         },
         createOneBase: {
             decorators: [
-                UseGuards(JwtAuthGuard),
+                UseGuards(AuthGuard('jwt')),
+                ApiOkResponse({type: ScreenDTOResponse}),
                 ApiAcceptedResponse({ description: 'Creates screen' }),
                 ApiUnauthorizedResponse({ description: 'Not authenticated' }),
             ],
@@ -34,6 +37,7 @@ import { ScreenService } from "./screen.service";
         updateOneBase: {
             decorators: [
                 UseGuards(ScreenGuard),
+                ApiOkResponse({type: ScreenDTOResponse}),
                 ApiAcceptedResponse({ description: 'Updates screen info' }),
                 ApiUnauthorizedResponse({ description: 'Not authorized' }),
                 ApiNotFoundResponse({ description: 'Screen not found' }),
@@ -42,6 +46,7 @@ import { ScreenService } from "./screen.service";
         deleteOneBase: {
             decorators: [
                 UseGuards(ScreenGuard),
+                ApiOkResponse({type: ScreenDTOResponse}),
                 ApiAcceptedResponse({ description: 'Deletes screen' }),
                 ApiUnauthorizedResponse({ description: 'Not authorized' }),
                 ApiNotFoundResponse({ description: 'Screen not found' }),

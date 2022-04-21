@@ -1,11 +1,11 @@
 import { Controller, UseGuards } from '@nestjs/common';
 import { Crud, CrudController } from '@nestjsx/crud';
-import { CreateEventDTO, UpdateEventDTO } from './event.dto';
+import { CreateEventDTO, EventDTOResponse, UpdateEventDTO } from './event.dto';
 import { EventEntity } from './event.entity';
 import { EventService } from './event.service';
-import { ApiAcceptedResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { ApiAcceptedResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { EventGuard } from './event.guard';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { AuthGuard } from '@nestjs/passport';
 
 
 @Crud({
@@ -20,25 +20,30 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
         only: ['createOneBase', 'getOneBase', 'createOneBase', 'updateOneBase', 'deleteOneBase'],
         getManyBase: {
             decorators: [
+                ApiOkResponse({type: EventDTOResponse}),
                 ApiAcceptedResponse({ description: 'Returns all events' }),
             ],
         },
         getOneBase: {
             decorators: [
+                ApiOkResponse({type: EventDTOResponse}),
                 ApiAcceptedResponse({ description: 'Returns specified event' }),
                 ApiNotFoundResponse({ description: 'Not found' }),
             ],
         },
         createOneBase: {
             decorators: [
-                UseGuards(JwtAuthGuard),
+                UseGuards(AuthGuard('jwt')),
+                ApiOkResponse({type: EventDTOResponse}),
                 ApiCreatedResponse({ description: 'Creates event' }),
                 ApiUnauthorizedResponse({ description: 'Not authenticated' }),
             ],
         },
         updateOneBase: {
             decorators: [
+                UseGuards(AuthGuard('jwt')),
                 UseGuards(EventGuard),
+                ApiOkResponse({type: EventDTOResponse}),
                 ApiAcceptedResponse({ description: 'Updates event' }),
                 ApiNotFoundResponse({ description: 'Not found' }),
                 ApiUnauthorizedResponse({ description: 'Not authorized' }),
@@ -46,7 +51,9 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
         },
         deleteOneBase: {
             decorators: [
+                UseGuards(AuthGuard('jwt')),
                 UseGuards(EventGuard),
+                ApiOkResponse({type: EventDTOResponse}),
                 ApiAcceptedResponse({ description: 'Deletes event' }),
                 ApiNotFoundResponse({ description: 'Not found' }),
                 ApiUnauthorizedResponse({ description: 'Not authorized' }),

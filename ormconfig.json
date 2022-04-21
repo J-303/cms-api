@@ -5,6 +5,8 @@
     "username": "test",
     "password": "test",
     "database": "cmstest",
-    "entities": ["dist/**/*.entity{.ts,.js}"],
-    "synchronize": true
+    "entities": ["./dist/**/*.entity{.ts,.js}"],
+    "synchronize": true,
+    "seeds": ["./dist/**/*.seed{.ts,.js}"],
+    "factories": ["./dist/**/*.factory{.ts,.js}"]
 }

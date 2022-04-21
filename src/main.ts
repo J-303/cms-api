@@ -6,14 +6,14 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // app.useGlobalPipes(new ValidationPipe)
+  app.useGlobalPipes(new ValidationPipe);
 
   const config = new DocumentBuilder()
     .setTitle('CMS')
     .setVersion('1.0')
     .build();
   const doc = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, doc)
+  SwaggerModule.setup('api', app, doc);
 
   await app.listen(3000);
 }

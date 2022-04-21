@@ -16,3 +16,8 @@ export class UpdatePlaylistDTO {
     @IsNotEmpty()
     name: string;
 }
+
+export class PlaylistDTOResponse {
+    @ApiProperty()
+    name: string;
+}

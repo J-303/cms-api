@@ -20,3 +20,12 @@ export class UpdateContentDTO {
     @IsUrl()
     url?: string;
 }
+
+export class ContentDTOResponse {
+    @ApiProperty()
+    name?: string;
+    
+    @ApiProperty()
+    @IsUrl()
+    url?: string;
+}

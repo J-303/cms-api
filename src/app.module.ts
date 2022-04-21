@@ -8,7 +8,6 @@ import { ScreenModule } from './screen/screen.module';
 import { PlaylistModule } from './playlist/playlist.module';
 import { ContentModule } from './content/content.module';
 import { ContentPlaylistModule } from './content-playlist/content-playlist.module';
-import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -22,6 +21,6 @@ import { AppService } from './app.service';
     ContentPlaylistModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
 export class AppModule {}
