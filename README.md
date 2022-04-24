@@ -1,3 +1,4 @@
+
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
@@ -37,10 +38,6 @@ $ npm run test:cov
 ## Seeding data
 
 ```bash
-# run seeding
+# seeding run
 $ npm run seed:run
 ```
-
-## DBDiagram
-
-https://dbdiagram.io/d/624ea0edd043196e39111edb

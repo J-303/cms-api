@@ -1,63 +1,61 @@
 import { Controller, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
-import { ApiAcceptedResponse, ApiBadRequestResponse, ApiBearerAuth, ApiNotFoundResponse, ApiOkResponse, ApiTags, ApiUnauthorizedResponse } from "@nestjs/swagger";
+import { ApiAcceptedResponse, ApiBearerAuth, ApiNotFoundResponse, ApiOkResponse, ApiTags, ApiUnauthorizedResponse } from "@nestjs/swagger";
 import { Crud, CrudController } from "@nestjsx/crud";
-import { ContentPlaylistDTOResponse, CreateContentPlaylistDTO, UpdateContentPlaylistDTO } from "./content-playlist.dto";
+import { CreateContentPlaylistDTO, ResponseContentPlaylistDTO, UpdateContentPlaylistDTO } from "./content-playlist.dto";
 import { ContentPlaylistEntity } from "./content-playlist.entity";
-import { ContentPlaylistGuard } from "./content-playlist.guard";
+import { ContentPlaylistOwnerGuard } from "./content-playlist.guard";
 import { ContentPlaylistService } from "./content-playlist.service";
 
 @Crud({
     model: {
         type: ContentPlaylistEntity,
     },
+    dto: {
+        create: CreateContentPlaylistDTO,
+        update: UpdateContentPlaylistDTO,
+    },
     routes: {
         only: ['createOneBase', 'getOneBase', 'getManyBase', 'updateOneBase', 'deleteOneBase'],
-        createOneBase: {
+        getManyBase: {
             decorators: [
-                UseGuards(AuthGuard('jwt')),
-                ApiOkResponse({type: ContentPlaylistDTOResponse}),
-                ApiAcceptedResponse({ description: 'Creates content' }),
-                ApiUnauthorizedResponse({ description: 'Not authenticated' }),
+                ApiOkResponse({type: ResponseContentPlaylistDTO}),
+                ApiAcceptedResponse(),
             ],
         },
         getOneBase: {
             decorators: [
-                ApiOkResponse({type: ContentPlaylistDTOResponse}),
-                ApiAcceptedResponse({ description: 'Returns specified content' }),
-                ApiNotFoundResponse({ description: 'Content not found' }),
+                ApiOkResponse({type: ResponseContentPlaylistDTO}),
+                ApiAcceptedResponse(),
+                ApiNotFoundResponse(),
             ],
         },
-        getManyBase: {
+        createOneBase: {
             decorators: [
-                ApiOkResponse({type: ContentPlaylistDTOResponse}),
-                ApiAcceptedResponse({ description: 'Returns all content' }),
+                UseGuards(AuthGuard('jwt')),
+                ApiOkResponse({type: ResponseContentPlaylistDTO}),
+                ApiAcceptedResponse(),
+                ApiUnauthorizedResponse(),
             ],
         },
         updateOneBase: {
             decorators: [
                 UseGuards(AuthGuard('jwt')),
-                UseGuards(ContentPlaylistGuard),
-                ApiOkResponse({type: ContentPlaylistDTOResponse}),
-                ApiAcceptedResponse({ description: 'Updates content' }),
-                ApiBadRequestResponse({ description: 'Not authorized' }),
-                ApiNotFoundResponse({ description: 'Content not found' }),
+                UseGuards(ContentPlaylistOwnerGuard),
+                ApiOkResponse({type: ResponseContentPlaylistDTO}),
+                ApiAcceptedResponse(),
+                ApiNotFoundResponse(),
             ],
         },
         deleteOneBase: {
             decorators: [
                 UseGuards(AuthGuard('jwt')),
-                UseGuards(ContentPlaylistGuard),
-                ApiOkResponse({type: ContentPlaylistDTOResponse}),
-                ApiAcceptedResponse({ description: 'Deletes content' }),
-                ApiBadRequestResponse({ description: 'Not authorized' }),
-                ApiNotFoundResponse({ description: 'Content not found' }),
+                UseGuards(ContentPlaylistOwnerGuard),
+                ApiOkResponse({type: ResponseContentPlaylistDTO}),
+                ApiAcceptedResponse(),
+                ApiNotFoundResponse(),
             ],
         },
-    },
-    dto: {
-        create: CreateContentPlaylistDTO,
-        update: UpdateContentPlaylistDTO,
     },
 })
 @Controller('content-playlist')

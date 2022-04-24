@@ -1,23 +1,21 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { jwtConstants } from 'src/auth/constants';
-import { ContentEntity } from 'src/content/content.entity';
-import { EventEntity } from 'src/event/event.entity';
+import { ContentRepository } from 'src/content/content.repository';
+import { EventRepository } from 'src/event/event.repository';
 import { UserController } from './user.controller';
-import { UserEntity } from './user.entity';
+import { UserRepository } from './user.repository';
 import { UserService } from './user.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserEntity, EventEntity, ContentEntity]),
+    TypeOrmModule.forFeature([UserRepository, EventRepository, ContentRepository]),
     JwtModule.register({
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' }
+      secret: process.env.JWT_SECRET,
+      signOptions: {expiresIn: '1d'}
     })
   ],
   controllers: [UserController],
-  providers: [UserService],
-  exports: [UserService]
+  providers: [UserService]
 })
 export class UserModule {}

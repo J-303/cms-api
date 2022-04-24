@@ -1,8 +1,8 @@
 import { ScreenEntity } from "../screen/screen.entity";
 import { UserEntity } from "../user/user.entity";
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity('event')
+@Entity('events')
 export class EventEntity {
     @PrimaryGeneratedColumn()
     id: number;
@@ -11,8 +11,10 @@ export class EventEntity {
     name: string;
 
     @ManyToOne(type => UserEntity, owner => owner.events, {cascade: true})    
-    @JoinColumn({name: 'ownerId'})
     owner: UserEntity
+
+    @Column()
+    ownerId: number;
 
     @OneToMany(type => ScreenEntity, screen => screen.event) 
     screens?: ScreenEntity[];

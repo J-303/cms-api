@@ -2,60 +2,62 @@ import { Controller, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { ApiAcceptedResponse, ApiUnauthorizedResponse, ApiBearerAuth, ApiNotFoundResponse, ApiTags, ApiOkResponse } from "@nestjs/swagger";
 import { Crud, CrudController } from "@nestjsx/crud";
-import { CreateScreenDTO, ScreenDTOResponse, UpdateScreenDTO } from "./screen.dto";
+import { CreateScreenDTO, ResponseScreenDTO, UpdateScreenDTO } from "./screen.dto";
 import { ScreenEntity } from "./screen.entity";
-import { ScreenGuard } from "./screen.guard";
+import { ScreenOwnerGuard } from "./screen.guard";
 import { ScreenService } from "./screen.service";
 
 @Crud({
     model: {
         type: ScreenEntity,
     },
+    dto: {
+        create: CreateScreenDTO,
+        update: UpdateScreenDTO,
+    },
     routes: {
         only: ['createOneBase', 'getOneBase', 'getManyBase', 'updateOneBase', 'deleteOneBase'],
         getOneBase: {
             decorators: [
-                ApiOkResponse({type: ScreenDTOResponse}),
-                ApiAcceptedResponse({ description: 'Returns screen' }),
-                ApiNotFoundResponse({ description: 'Screen not found' }),
+                ApiOkResponse({type: ResponseScreenDTO}),
+                ApiAcceptedResponse(),
+                ApiNotFoundResponse(),
             ],
         },
         getManyBase: {
             decorators: [
-                ApiOkResponse({type: ScreenDTOResponse}),
-                ApiAcceptedResponse({ description: 'Returns all screens' })
+                ApiOkResponse({type: ResponseScreenDTO}),
+                ApiAcceptedResponse()
             ],
         },
         createOneBase: {
             decorators: [
                 UseGuards(AuthGuard('jwt')),
-                ApiOkResponse({type: ScreenDTOResponse}),
-                ApiAcceptedResponse({ description: 'Creates screen' }),
-                ApiUnauthorizedResponse({ description: 'Not authenticated' }),
+                ApiOkResponse({type: ResponseScreenDTO}),
+                ApiAcceptedResponse(),
+                ApiUnauthorizedResponse(),
             ],
         },
         updateOneBase: {
             decorators: [
-                UseGuards(ScreenGuard),
-                ApiOkResponse({type: ScreenDTOResponse}),
-                ApiAcceptedResponse({ description: 'Updates screen info' }),
-                ApiUnauthorizedResponse({ description: 'Not authorized' }),
-                ApiNotFoundResponse({ description: 'Screen not found' }),
+                UseGuards(AuthGuard('jwt')),
+                UseGuards(ScreenOwnerGuard),
+                ApiOkResponse({type: ResponseScreenDTO}),
+                ApiAcceptedResponse(),
+                ApiUnauthorizedResponse(),
+                ApiNotFoundResponse(),
             ],
         },
         deleteOneBase: {
             decorators: [
-                UseGuards(ScreenGuard),
-                ApiOkResponse({type: ScreenDTOResponse}),
-                ApiAcceptedResponse({ description: 'Deletes screen' }),
-                ApiUnauthorizedResponse({ description: 'Not authorized' }),
-                ApiNotFoundResponse({ description: 'Screen not found' }),
+                UseGuards(AuthGuard('jwt')),
+                UseGuards(ScreenOwnerGuard),
+                ApiOkResponse({type: ResponseScreenDTO}),
+                ApiAcceptedResponse(),
+                ApiUnauthorizedResponse(),
+                ApiNotFoundResponse(),
             ],
         },
-    },
-    dto: {
-        create: CreateScreenDTO,
-        update: UpdateScreenDTO,
     },
 })
 @Controller('screens')

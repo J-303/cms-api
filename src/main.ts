@@ -9,9 +9,9 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe);
 
   const config = new DocumentBuilder()
-    .setTitle('CMS')
-    .setVersion('1.0')
-    .build();
+    .setTitle('CMS test')
+    .setVersion('0.0.2')
+    .build()
   const doc = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, doc);
 

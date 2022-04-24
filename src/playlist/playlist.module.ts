@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ContentPlaylistEntity } from 'src/content-playlist/content-playlist.entity';
-import { UserEntity } from 'src/user/user.entity';
+import { ContentPlaylistRepository } from 'src/content-playlist/content-playlist.repository';
+import { UserRepository } from 'src/user/user.repository';
 import { PlaylistController } from './playlist.controller';
-import { PlaylistEntity } from './playlist.entity';
+import { PlaylistRepository } from './playlist.repository';
 import { PlaylistService } from './playlist.service';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([PlaylistEntity, UserEntity, ContentPlaylistEntity])],
+    imports: [TypeOrmModule.forFeature([PlaylistRepository, UserRepository, ContentPlaylistRepository])],
     controllers: [PlaylistController],
     providers: [PlaylistService]
 })

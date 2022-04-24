@@ -21,14 +21,6 @@ export class UpdateUserDTO {
     username: string;
 }
 
-export class UserDTOResponse {
-    @ApiProperty()
-    id: number;
-
-    @ApiProperty()
-    username: string;
-}
-
 export class LoginUserDTO {
     @ApiProperty()
     @IsEmail()
@@ -37,4 +29,12 @@ export class LoginUserDTO {
     @ApiProperty()
     @IsNotEmpty()
     password: string;
+}
+
+export class ResponseUserDTO {
+    @ApiProperty()
+    id: number;
+
+    @ApiProperty()
+    username: string;
 }

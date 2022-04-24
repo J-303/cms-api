@@ -21,11 +21,11 @@ export class UpdateContentDTO {
     url?: string;
 }
 
-export class ContentDTOResponse {
+export class ResponseContentDTO {
     @ApiProperty()
-    name?: string;
+    name: string;
     
     @ApiProperty()
     @IsUrl()
-    url?: string;
+    url: string;
 }

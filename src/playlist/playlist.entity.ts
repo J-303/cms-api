@@ -2,7 +2,7 @@ import { ContentPlaylistEntity } from "../content-playlist/content-playlist.enti
 import { UserEntity } from "../user/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity('playlist')
+@Entity('playlists')
 export class PlaylistEntity {
     @PrimaryGeneratedColumn()
     id: number;
@@ -11,8 +11,10 @@ export class PlaylistEntity {
     name: string;
 
     @ManyToOne(type => UserEntity)   
-    @JoinColumn({name: 'ownerId'})
     owner: UserEntity;
+
+    @Column()
+    ownerId: number
 
     @OneToMany(type => ContentPlaylistEntity, entity => entity.playlist)
     contents: ContentPlaylistEntity[]

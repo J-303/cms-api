@@ -1,39 +1,24 @@
 import { Injectable, CanActivate, ExecutionContext, NotFoundException, ForbiddenException } from "@nestjs/common";
-import { ScreenEntity } from "../screen/screen.entity";
-import { UserEntity } from "src/user/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { ScreenRepository } from "./screen.repository";
 
 @Injectable()
-export class ScreenGuard implements CanActivate {
+export class ScreenOwnerGuard implements CanActivate {
     constructor(
-        @InjectRepository(ScreenEntity)
-        private screenRepo: Repository<ScreenEntity>,
-        @InjectRepository(UserEntity)
-        private userRepo: Repository<UserEntity>,
+        @InjectRepository(ScreenRepository)
+        private screenRepo: ScreenRepository,
     ) {}
 
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
-        const screen_id = request.params.id;
 
-        const modScreen = await this.screenRepo.findOne({
-            where: { id: screen_id },
-            relations: ['owner']
-        });
-        if (!modScreen) {
-            throw new NotFoundException('Screen specified does not exists');
-        }
-        const owner = await this.userRepo.findOne({
-            where: { id: modScreen.owner.id }
-        });
+        const screen = await this.screenRepo.findOne({where: {id: request.params.id}});
+        if (!screen) throw new NotFoundException();
 
         const user = request.user;
-        if (user.id == owner.id) {
-            return true;
-        } else {
-            throw new ForbiddenException('You are not the owner of specified screen');
-        }
+        if (user.id != screen.ownerId) throw new ForbiddenException();
+
+        return true;
     }
 }

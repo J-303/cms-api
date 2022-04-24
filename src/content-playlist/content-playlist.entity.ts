@@ -1,7 +1,7 @@
 import { ContentEntity } from "../content/content.entity";
 import { PlaylistEntity } from "../playlist/playlist.entity";
 import { UserEntity } from "../user/user.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('content_playlist')
 export class ContentPlaylistEntity {
@@ -15,14 +15,20 @@ export class ContentPlaylistEntity {
     position: number;
 
     @ManyToOne(type => ContentEntity)
-    @JoinColumn({name: 'contentId'})
     content: ContentEntity;
 
+    @Column()
+    contentId: number;
+
     @ManyToOne(type => PlaylistEntity, playlist => playlist.contents, {cascade: true})
-    @JoinColumn({name: 'playlistId'})
     playlist: PlaylistEntity;
 
+    @Column() 
+    playlistId: number;
+
     @ManyToOne(type => UserEntity)
-    @JoinColumn({name: 'ownerId'})
     owner: UserEntity;
+
+    @Column()
+    ownerId: number;
 }

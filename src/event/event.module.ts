@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ScreenEntity } from 'src/screen/screen.entity';
-import { UserEntity } from 'src/user/user.entity';
+import { ScreenRepository } from 'src/screen/screen.repository';
+import { UserRepository } from 'src/user/user.repository';
 import { EventController } from './event.controller';
-import { EventEntity } from './event.entity';
+import { EventRepository } from './event.repository';
 import { EventService } from './event.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([EventEntity, UserEntity, ScreenEntity])],
+  imports: [TypeOrmModule.forFeature([EventRepository, UserRepository, ScreenRepository])],
   controllers: [EventController],
   providers: [EventService]
 })

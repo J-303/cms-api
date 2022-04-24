@@ -1,7 +1,7 @@
 import { UserEntity } from "../user/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity('content')
+@Entity('contents')
 export class ContentEntity {
     @PrimaryGeneratedColumn()
     id: number;
@@ -13,8 +13,8 @@ export class ContentEntity {
     url: string;
 
     @ManyToOne(type => UserEntity, owner => owner.contents, {cascade: true})
-    @JoinColumn({name: 'ownerId'})
     owner: UserEntity;
 
+    @Column()
     ownerId: number;
 }

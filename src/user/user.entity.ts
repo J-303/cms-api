@@ -3,7 +3,7 @@ import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 
 import { hash } from 'bcrypt'
 import { ContentEntity } from "../content/content.entity";
 
-@Entity('user')
+@Entity('users')
 export class UserEntity {
     @PrimaryGeneratedColumn()
     id: number;
@@ -25,6 +25,6 @@ export class UserEntity {
 
     @BeforeInsert()
     async hashPassword() {
-        this.password = await hash(this.password, 10);
+        this.password = await hash(this.password, parseInt(process.env.HASH_SALT));
     }
 }

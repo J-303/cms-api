@@ -13,7 +13,7 @@ export class UpdateEventDTO {
     name: string;
 }
 
-export class EventDTOResponse {
+export class ResponseEventDTO {
     @ApiProperty()
     name: string;
 }

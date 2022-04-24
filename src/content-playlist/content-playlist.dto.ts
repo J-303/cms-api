@@ -21,7 +21,7 @@ export class UpdateContentPlaylistDTO {
     duration?: number;
 }
 
-export class ContentPlaylistDTOResponse {
+export class ResponseContentPlaylistDTO {
     @ApiProperty()
     @IsNumber()
     position: number;

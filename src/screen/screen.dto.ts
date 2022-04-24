@@ -18,7 +18,7 @@ export class UpdateScreenDTO {
     name: string;
 }
 
-export class ScreenDTOResponse {
+export class ResponseScreenDTO {
     @ApiProperty()
     name: string;
 }

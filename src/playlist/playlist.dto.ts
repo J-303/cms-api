@@ -17,7 +17,7 @@ export class UpdatePlaylistDTO {
     name: string;
 }
 
-export class PlaylistDTOResponse {
+export class ResponsePlaylistDTO {
     @ApiProperty()
     name: string;
 }

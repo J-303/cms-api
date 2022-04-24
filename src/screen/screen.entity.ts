@@ -3,7 +3,7 @@ import { PlaylistEntity } from "../playlist/playlist.entity";
 import { UserEntity } from "../user/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity('screen')
+@Entity('screens')
 export class ScreenEntity {
     @PrimaryGeneratedColumn()
     id: number;
@@ -12,13 +12,20 @@ export class ScreenEntity {
     name: string;
 
     @ManyToOne(type => UserEntity)
-    @JoinColumn({name: 'ownerId'})
     owner: UserEntity;
 
+    @Column()
+    ownerId: number;
+
     @ManyToOne(type => EventEntity, event => event.screens, {cascade: true})
-    @JoinColumn({name: 'eventId'})
     event: EventEntity;
 
+    @Column()
+    eventId: number;
+
     @OneToOne(type => PlaylistEntity)
-    playlist: PlaylistEntity;
+    playlist?: PlaylistEntity;
+
+    @Column()
+    playlistId?: number;
 }

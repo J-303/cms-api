@@ -1,37 +1,22 @@
 import { ForbiddenException, NotFoundException, CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
-import { UserEntity } from "src/user/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ContentPlaylistEntity } from "./content-playlist.entity";
-import { Repository } from "typeorm";
+import { ContentPlaylistRepository } from "./content-playlist.repository";
 
 @Injectable()
-export class ContentPlaylistGuard implements CanActivate {
+export class ContentPlaylistOwnerGuard implements CanActivate {
     constructor(
-        @InjectRepository(ContentPlaylistEntity)
-        private contentPlaylistpRepo: Repository<ContentPlaylistEntity>,
-        @InjectRepository(UserEntity)
-        private userRepo: Repository<UserEntity>
+        @InjectRepository(ContentPlaylistRepository)
+        private contentPlaylistpRepo: ContentPlaylistRepository
     ) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
 
-        const playlistId = request.params.id;
-        const modPlaylist = await this.contentPlaylistpRepo.findOne({
-            where: { id: playlistId }
-        });
-        if (!modPlaylist) {
-            throw new NotFoundException('Specified playlist does not exists');
-        }
-        const owner = await this.userRepo.findOne({
-            where: { id: modPlaylist.owner.id }
-        })
+        const content_playlist = await this.contentPlaylistpRepo.findOne({where: {id: request.params.id}});
+        if (!content_playlist) throw new NotFoundException();
 
         const user = request.user;
-        if (user.id == owner.id) {
-            return true;
-        } else {
-            throw new ForbiddenException('You are not the owner of specified playlist');
-        }
+        if (user.id != content_playlist.ownerId) throw new ForbiddenException();
+        return true;
     }
 }

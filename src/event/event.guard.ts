@@ -1,39 +1,26 @@
 import { CanActivate, ExecutionContext, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from 'src/user/user.entity';
-import { Repository } from 'typeorm';
-import { EventEntity } from './event.entity';
+import { EventRepository } from './event.repository';
 
 @Injectable()
-export class EventGuard implements CanActivate {
+export class EventOwnerGuard implements CanActivate {
   constructor(
-    @InjectRepository(UserEntity)
-    private userRepo: Repository<UserEntity>,
-    @InjectRepository(EventEntity)
-    private eventRepo: Repository<EventEntity>,
+    @InjectRepository(EventRepository)
+    private eventRepo: EventRepository,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {        
     const req = context.switchToHttp().getRequest();
-    const event_id = req.params.id;
 
-    const modEvent = await this.eventRepo.findOne({
-        where: { id: event_id },
-        relations: ['owner']
-    });
-    if (!modEvent) {
-        throw new NotFoundException('Specified event does not exists');
+    const event = await this.eventRepo.findOne({where: {id: req.params.id}});
+    if (!event) {
+      throw new NotFoundException();
     }
-
-    const owner = await this.userRepo.findOne({
-        where: { id: modEvent.owner.id }
-    });
 
     const user = req.user;
-    if (user.id == owner.id) {
-        return true;
-    } else {
-        throw new ForbiddenException('You are not the owner of specified event');
+    if (user.id != event.ownerId) {
+      throw new ForbiddenException()
     }
+    return true;
   }
 }

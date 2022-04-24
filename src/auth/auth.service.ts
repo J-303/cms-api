@@ -1,18 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from 'src/user/user.service';
 import { compare } from 'bcrypt';
+import { UserRepository } from 'src/user/user.repository';
 
 @Injectable()
 export class AuthService {
-    constructor(
-        private userService: UserService
-    ) {}
+    constructor(private userRepo: UserRepository) {}
 
-    async validateUser(username: string, password: string) {
-        const user = await this.userService.findOne({where: {username}});
-        if (user && compare(password, user.password)) {
-            const {password, ...result} = user;
-            return result;
+    async validateUser(userEmail: string, userPassword: string) {
+        const user = await this.userRepo.findOne({where: {email: userEmail}});
+        if (user && compare(userPassword, user.password)) {
+            const {id, email} = user;
+            return {id, email};
         }
         return null;
     }

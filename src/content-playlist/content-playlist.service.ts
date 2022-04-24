@@ -1,12 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
 import { TypeOrmCrudService } from "@nestjsx/crud-typeorm";
-import { Repository } from "typeorm";
 import { ContentPlaylistEntity } from "./content-playlist.entity";
+import { ContentPlaylistRepository } from "./content-playlist.repository";
 
 @Injectable()
 export class ContentPlaylistService extends TypeOrmCrudService<ContentPlaylistEntity> {
-    constructor(@InjectRepository(ContentPlaylistEntity) contentPlaylistRepo: Repository<ContentPlaylistEntity>) {
+    constructor(private contentPlaylistRepo: ContentPlaylistRepository) {
         super(contentPlaylistRepo);
     }
 }
