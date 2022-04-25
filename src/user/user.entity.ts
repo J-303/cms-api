@@ -2,6 +2,7 @@ import { EventEntity } from "../event/event.entity";
 import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { hash } from 'bcrypt'
 import { ContentEntity } from "../content/content.entity";
+import { IsOptional } from "class-validator";
 
 @Entity('users')
 export class UserEntity {
@@ -18,9 +19,11 @@ export class UserEntity {
     password: string;
 
     @OneToMany(type => EventEntity, event => event.owner)
+    @IsOptional()
     events?: EventEntity[];
 
     @OneToMany(type => ContentEntity, content => content.owner)
+    @IsOptional()
     contents?: ContentEntity[];
 
     @BeforeInsert()

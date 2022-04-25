@@ -5,7 +5,7 @@ import { PlaylistService } from "./playlist.service";
 import { PlaylistEntity } from "./playlist.entity";
 import { CreatePlaylistDTO, ResponsePlaylistDTO, UpdatePlaylistDTO } from "./playlist.dto";
 import { AuthGuard } from "@nestjs/passport";
-import { PlaylistOwnerGuard } from "./playlist.guard";
+import { PlaylistOwnerGuard } from "./playlist-owner.guard";
 
 @Crud({
     model: {

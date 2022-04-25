@@ -4,7 +4,7 @@ import { ApiAcceptedResponse, ApiUnauthorizedResponse, ApiBearerAuth, ApiNotFoun
 import { Crud, CrudController } from "@nestjsx/crud";
 import { CreateScreenDTO, ResponseScreenDTO, UpdateScreenDTO } from "./screen.dto";
 import { ScreenEntity } from "./screen.entity";
-import { ScreenOwnerGuard } from "./screen.guard";
+import { ScreenOwnerGuard } from "./screen-owner.guard";
 import { ScreenService } from "./screen.service";
 
 @Crud({

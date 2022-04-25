@@ -6,13 +6,13 @@ import { ContentPlaylistRepository } from "./content-playlist.repository";
 export class ContentPlaylistOwnerGuard implements CanActivate {
     constructor(
         @InjectRepository(ContentPlaylistRepository)
-        private contentPlaylistpRepo: ContentPlaylistRepository
+        private contentPlaylistRepo: ContentPlaylistRepository
     ) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
 
-        const content_playlist = await this.contentPlaylistpRepo.findOne({where: {id: request.params.id}});
+        const content_playlist = await this.contentPlaylistRepo.findOne({where: {id: request.params.id}});
         if (!content_playlist) throw new NotFoundException();
 
         const user = request.user;

@@ -4,9 +4,10 @@ import { ApiAcceptedResponse, ApiBearerAuth, ApiNotFoundResponse, ApiOkResponse,
 import { Crud, CrudController } from "@nestjsx/crud";
 import { CreateContentPlaylistDTO, ResponseContentPlaylistDTO, UpdateContentPlaylistDTO } from "./content-playlist.dto";
 import { ContentPlaylistEntity } from "./content-playlist.entity";
-import { ContentPlaylistOwnerGuard } from "./content-playlist.guard";
+import { ContentPlaylistOwnerGuard } from "./content-playlist-owner.guard";
 import { ContentPlaylistService } from "./content-playlist.service";
 
+@UseGuards(AuthGuard('jwt'))
 @Crud({
     model: {
         type: ContentPlaylistEntity,
@@ -32,7 +33,6 @@ import { ContentPlaylistService } from "./content-playlist.service";
         },
         createOneBase: {
             decorators: [
-                UseGuards(AuthGuard('jwt')),
                 ApiOkResponse({type: ResponseContentPlaylistDTO}),
                 ApiAcceptedResponse(),
                 ApiUnauthorizedResponse(),
@@ -40,7 +40,6 @@ import { ContentPlaylistService } from "./content-playlist.service";
         },
         updateOneBase: {
             decorators: [
-                UseGuards(AuthGuard('jwt')),
                 UseGuards(ContentPlaylistOwnerGuard),
                 ApiOkResponse({type: ResponseContentPlaylistDTO}),
                 ApiAcceptedResponse(),
@@ -49,7 +48,6 @@ import { ContentPlaylistService } from "./content-playlist.service";
         },
         deleteOneBase: {
             decorators: [
-                UseGuards(AuthGuard('jwt')),
                 UseGuards(ContentPlaylistOwnerGuard),
                 ApiOkResponse({type: ResponseContentPlaylistDTO}),
                 ApiAcceptedResponse(),

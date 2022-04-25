@@ -5,7 +5,7 @@ import { EventEntity } from './event.entity';
 import { EventService } from './event.service';
 import { ApiAcceptedResponse, ApiBearerAuth, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { EventOwnerGuard } from './event.guard';
+import { EventOwnerGuard } from './event-owner.guard';
 
 
 @Crud({

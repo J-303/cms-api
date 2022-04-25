@@ -4,7 +4,7 @@ import { ApiAcceptedResponse, ApiBearerAuth, ApiForbiddenResponse, ApiNotFoundRe
 import { Crud, CrudController } from "@nestjsx/crud";
 import { CreateContentDTO, ResponseContentDTO, UpdateContentDTO } from "./content.dto";
 import { ContentEntity } from "./content.entity";
-import { ContentOwnerGuard } from "./content.guard";
+import { ContentOwnerGuard } from "./content-owner.guard";
 import { ContentService } from "./content.service";
 
 @Crud({
