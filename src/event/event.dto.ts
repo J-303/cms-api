@@ -1,9 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsDefined, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreateEventDTO {
     @ApiProperty()
-    @IsOptional()
+    @IsDefined()
     @IsNotEmpty()
     @IsString()
     name: string;
@@ -14,12 +14,12 @@ export class UpdateEventDTO {
     @IsOptional()
     @IsNotEmpty()
     @IsString()
-    name: string;
+    name?: string;
 }
 
 export class ResponseEventDTO {
     @ApiProperty()
-    @IsOptional()
+    @IsDefined()
     @IsNotEmpty()
     @IsString()
     name: string;

@@ -1,9 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsDefined, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateScreenDTO {
     @ApiProperty()
-    @IsOptional()
+    @IsDefined()
     @IsNotEmpty()
     @IsString()
     name: string;
@@ -20,12 +20,12 @@ export class UpdateScreenDTO {
     @IsOptional()
     @IsNotEmpty()
     @IsString()
-    name: string;
+    name?: string;
 }
 
 export class ResponseScreenDTO {
     @ApiProperty()
-    @IsOptional()
+    @IsDefined()
     @IsNotEmpty()
     @IsString()
     name: string;

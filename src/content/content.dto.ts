@@ -1,14 +1,14 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsOptional, IsUrl } from "class-validator";
+import { IsDefined, IsNotEmpty, IsOptional, IsUrl } from "class-validator";
 
 export class CreateContentDTO {
     @ApiProperty()
-    @IsOptional()
+    @IsDefined()
     @IsNotEmpty()
     name: string;
 
     @ApiProperty()
-    @IsOptional()
+    @IsDefined()
     @IsNotEmpty()
     @IsUrl()
     url: string;
@@ -16,10 +16,12 @@ export class CreateContentDTO {
 
 export class UpdateContentDTO {
     @ApiProperty()
+    @IsOptional()
     @IsNotEmpty()
     name?: string;
     
     @ApiProperty()
+    @IsOptional()
     @IsNotEmpty()
     @IsUrl()
     url?: string;
@@ -27,12 +29,12 @@ export class UpdateContentDTO {
 
 export class ResponseContentDTO {
     @ApiProperty()
-    @IsOptional()
+    @IsDefined()
     @IsNotEmpty()
     name: string;
     
     @ApiProperty()
-    @IsOptional()
+    @IsDefined()
     @IsNotEmpty()
     @IsUrl()
     url: string;

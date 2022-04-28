@@ -1,21 +1,21 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsDefined, IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateUserDTO {
     @ApiProperty()
-    @IsOptional()
+    @IsDefined()
     @IsNotEmpty()
     @IsString()
     username: string;
 
     @ApiProperty()
-    @IsOptional()
+    @IsDefined()
     @IsNotEmpty()
     @IsEmail()
     email: string;
 
     @ApiProperty()
-    @IsOptional()
+    @IsDefined()
     @IsNotEmpty()
     @IsString()
     password: string;
@@ -26,32 +26,31 @@ export class UpdateUserDTO {
     @IsOptional()
     @IsNotEmpty()
     @IsString()
-    username: string;
+    username?: string;
 }
 
 export class LoginUserDTO {
     @ApiProperty()
-    @IsOptional()
+    @IsDefined()
     @IsNotEmpty()
     @IsEmail()
     email: string;
 
     @ApiProperty()
-    @IsOptional()
-    @IsNotEmpty()
+    @IsDefined()
     @IsString()
     password: string;
 }
 
 export class ResponseUserDTO {
     @ApiProperty()
-    @IsOptional()
+    @IsDefined()
     @IsNotEmpty()
     @IsNumber()
     id: number;
 
     @ApiProperty()
-    @IsOptional()
+    @IsDefined()
     @IsNotEmpty()
     @IsString()
     username: string;

@@ -11,7 +11,7 @@ import { UserService } from './user.service';
   imports: [
     TypeOrmModule.forFeature([UserRepository, EventRepository, ContentRepository]),
     JwtModule.register({
-      secret: process.env.JWT_SECRET,
+      secret: `${process.env.JWT_SECRET}`,
       signOptions: {expiresIn: '1d'}
     })
   ],

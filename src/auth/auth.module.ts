@@ -9,7 +9,7 @@ import { LocalStrategy } from './local.strategy';
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserRepository]),
-    PassportModule.register({session: true}),
+    PassportModule.register({}),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy]
 })

@@ -1,7 +1,6 @@
 import { ScreenEntity } from "../screen/screen.entity";
 import { UserEntity } from "../user/user.entity";
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { IsOptional } from "class-validator";
 
 @Entity('events')
 export class EventEntity {
@@ -12,13 +11,11 @@ export class EventEntity {
     name: string;
 
     @ManyToOne(type => UserEntity, owner => owner.events, {cascade: true})    
-    @IsOptional()
-    owner: UserEntity
+    owner?: UserEntity
 
     @Column()
     ownerId: number;
 
     @OneToMany(type => ScreenEntity, screen => screen.event) 
-    @IsOptional()
     screens?: ScreenEntity[];
 }

@@ -1,6 +1,5 @@
 import { UserEntity } from "../user/user.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { IsOptional } from "class-validator";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('contents')
 export class ContentEntity {
@@ -14,8 +13,7 @@ export class ContentEntity {
     url: string;
 
     @ManyToOne(type => UserEntity, owner => owner.contents, {cascade: true})
-    @IsOptional()
-    owner: UserEntity;
+    owner?: UserEntity;
 
     @Column()
     ownerId: number;

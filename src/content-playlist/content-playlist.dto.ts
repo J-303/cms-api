@@ -1,15 +1,15 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber, IsOptional } from "class-validator";
+import { IsDefined, IsNotEmpty, IsNumber, IsOptional } from "class-validator";
 
 export class CreateContentPlaylistDTO {
     @ApiProperty()
-    @IsOptional()
+    @IsDefined()
     @IsNotEmpty()
     @IsNumber()
     position: number;
 
     @ApiProperty()
-    @IsOptional()
+    @IsDefined()
     @IsNotEmpty()
     @IsNumber()
     duration: number;
@@ -17,11 +17,13 @@ export class CreateContentPlaylistDTO {
 
 export class UpdateContentPlaylistDTO {
     @ApiProperty()
+    @IsOptional()
     @IsNotEmpty()
     @IsNumber()
     position?: number;
 
     @ApiProperty()
+    @IsOptional()
     @IsNotEmpty()
     @IsNumber()
     duration?: number;
@@ -29,12 +31,14 @@ export class UpdateContentPlaylistDTO {
 
 export class ResponseContentPlaylistDTO {
     @ApiProperty()
-    @IsOptional()
+    @IsDefined()
+    @IsNotEmpty()
     @IsNumber()
     position: number;
 
     @ApiProperty()
-    @IsOptional()
+    @IsDefined()
+    @IsNotEmpty()
     @IsNumber()
     duration: number;
 }
